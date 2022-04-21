@@ -35,13 +35,14 @@ int main ( int argc, char *argv[] )
 		int count1[12];
 		char oCriteria[12];
 		char cCriteria[12];
-		int k = 0;
+		int k;
 
-		for(k; k < 12; k++){
+		for(k = 0; k < 12; k++){
 			updateCounts(count0, count1, data);
 			getOCriteria(oCriteria, count0, count1);
 			updateCounts(count0, count1, data2);
 			getCCriteria(cCriteria, count0, count1);
+			printf("%s\n", cCriteria);
 			for(i = 0; i < 1000; i++){
 				if(*(data[i] + k) != oCriteria[k]){
 					*(data[i] + k) = '2';
@@ -78,16 +79,16 @@ void getCCriteria(char cCrit[], int count0[], int count1[]){
 	}
 }
 
-void updateCounts(int count0[], int count1[], char *data[]){
+void updateCounts(int count0[], int count1[], char *d[]){
 	int i, j;
 	for(i = 0; i < 12; i++){
 		count0[i] = 0;
 		count1[i] = 0;
 	}
 	for(i = 0; i < 1000; i++){
-		if(!contains2(data[i])){
+		if(!contains2(d[i])){
 			for(j = 0; j < 12; j++){
-				*(data[i] + j) == '0' ? count0[j]++ : count1[j]++;
+				*(d[i] + j) == '0' ? count0[j]++ : count1[j]++;
 			}
 		}
 	}

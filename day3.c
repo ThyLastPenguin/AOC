@@ -33,8 +33,11 @@ int main ( int argc, char *argv[] )
 
 		int count0[12];
 		int count1[12];
-		char oCriteria[12];
-		char cCriteria[12];
+		char oCriteria[13];
+		char cCriteria[13];
+		int remData, remData2;
+		remData = 1000;
+		remData2 = 1000;
 		int k;
 
 		for(k = 0; k < 12; k++){
@@ -42,16 +45,25 @@ int main ( int argc, char *argv[] )
 			getOCriteria(oCriteria, count0, count1);
 			updateCounts(count0, count1, data2);
 			getCCriteria(cCriteria, count0, count1);
-			printf("%s\n", cCriteria);
+			printf("%s\n", oCriteria);
 			for(i = 0; i < 1000; i++){
-				if(*(data[i] + k) != oCriteria[k]){
-					*(data[i] + k) = '2';
+				if(!contains2(data[i])){
+					if(*(data[i] + k) != oCriteria[k]){
+						*(data[i] + k) = '2';
+						remData--;
+					}
 				}
-				if(*(data2[i] + k) != cCriteria[k]){
-					*(data2[i] + k) = '2';
+				if(remData2 > 1){
+					if(!contains2(data2[i])){
+						if(*(data2[i] + k) != cCriteria[k]){
+							*(data2[i] + k) = '2';
+							remData2--;
+						}
+					}
 				}
 			}
 		}
+		printf("%d %d \n", remData, remData2);
 
 		for(i = 0; i < 1000; i++){
 			if(!contains2(data[i]))
@@ -70,6 +82,7 @@ void getOCriteria(char oCrit[], int count0[], int count1[]){
 	for (i = 0; i < 12; i++){
 		count0[i] > count1[i] ? (oCrit[i] = '0') : (oCrit[i] = '1');
 	}
+	oCrit[12] = '\0';
 }
 
 void getCCriteria(char cCrit[], int count0[], int count1[]){
@@ -77,6 +90,7 @@ void getCCriteria(char cCrit[], int count0[], int count1[]){
 	for (i = 0; i < 12; i++){
 		count0[i] > count1[i] ? (cCrit[i] = '1') : (cCrit[i] = '0');
 	}
+	cCrit[12] = '\0';
 }
 
 void updateCounts(int count0[], int count1[], char *d[]){
